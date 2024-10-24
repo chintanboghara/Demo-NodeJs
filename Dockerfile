@@ -1,27 +1,31 @@
-# Stage 1
-
 FROM node:18 as builder
 
+# Set working directory
 WORKDIR /build
 
-COPY package*.json .
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
-COPY src/ src/
-COPY tsconfig.json tsconfig.json
+# Copy the rest of the application code
+COPY . .
 
+# Build the app
 RUN npm run build
 
+# Use a lighter image for the final output
+FROM node:18-alpine
 
-
-# Stage 2
-
-FROM node:18 as runner
-
+# Set working directory
 WORKDIR /app
 
-COPY --from=builder build/package*.json .
-COPY --from=builder build/node_modules node_modules/
-COPY --from=builder build/dist dist/
+# Copy built assets from the previous stage
+COPY --from=builder /build .
 
-CMD [ "npm", "start" ]
+# Expose the port the app runs on
+EXPOSE 3000
+
+# Command to run the app
+CMD ["npm", "start"]
