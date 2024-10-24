@@ -16,7 +16,7 @@ https://gitlab.com/chintanboghara/Demo-NodeJs.git
 Check out the pipeline status and details here:
 https://gitlab.com/chintanboghara/Demo-NodeJs/-/pipelines
 
-## Docker Hub: 
+## Docker Hub 
 
 https://hub.docker.com/repository/docker/chintanboghara/demo-nodejs/
 
